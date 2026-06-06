@@ -195,6 +195,22 @@ test("refresh gate waits for missing approval button", () => {
   );
 });
 
+test("refresh gate waits for ChatGPT display errors", () => {
+  const fakeDoc = doc([
+    el("section", { text: "出错了，无法显示此消息。" })
+  ]);
+  const state = {};
+  const settings = {
+    autoRefresh: true,
+    errorRefreshDelayMs: 1000,
+    minRefreshGapMs: 0
+  };
+
+  assert.equal(core.hasChatGPTDisplayError(fakeDoc), true);
+  assert.equal(core.updateRefreshState(fakeDoc, state, settings, 1000), null);
+  assert.equal(core.updateRefreshState(fakeDoc, state, settings, 2001), "ChatGPT display error stayed visible");
+});
+
 test("refresh gate does not refresh while user has typed composer text", () => {
   const fakeDoc = doc([
     el("section", { text: "Run shell commands on VPS? 使用工具存在风险" }, [
@@ -206,6 +222,18 @@ test("refresh gate does not refresh while user has typed composer text", () => {
 
   assert.equal(
     core.updateRefreshState(fakeDoc, {}, { autoRefresh: true, refreshDelayMs: 1, minRefreshGapMs: 0 }, 100),
+    null
+  );
+});
+
+test("display error refresh is skipped while user has typed composer text", () => {
+  const fakeDoc = doc([
+    el("section", { text: "出错了，无法显示此消息。" }),
+    el("div", { text: "继续处理这段内容", attrs: { contenteditable: "true" } })
+  ]);
+
+  assert.equal(
+    core.updateRefreshState(fakeDoc, {}, { autoRefresh: true, errorRefreshDelayMs: 1, minRefreshGapMs: 0 }, 100),
     null
   );
 });

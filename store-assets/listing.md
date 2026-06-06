@@ -6,7 +6,7 @@ ChatGPT Tool Auto Approver
 
 ## Short Description
 
-Automatically approves trusted ChatGPT tool confirmations and refreshes stalled prompt views.
+Automatically approves trusted ChatGPT tool confirmations and refreshes stalled or errored views.
 
 ## Detailed Description
 
@@ -14,14 +14,14 @@ ChatGPT Tool Auto Approver helps users who repeatedly run trusted tools in ChatG
 
 It only runs on `chatgpt.com` and `chat.openai.com`. The extension looks for ChatGPT tool confirmation cards that contain an explicit Allow/Approve button, a Reject/Deny button, and nearby tool-risk context. When that guarded pattern is present, it clicks Allow automatically. It never targets Reject/Deny buttons.
 
-Optional stall recovery can refresh a ChatGPT page when a tool confirmation card or retry state appears stuck. Refresh is skipped while the composer contains user-entered text.
+Optional stall recovery can refresh a ChatGPT page when a tool confirmation card, retry state, or ChatGPT display-error message appears stuck. Refresh is skipped while the composer contains user-entered text.
 
 Key features:
 
 - Auto-clicks Allow/Approve on ChatGPT tool confirmation cards.
 - Avoids Reject/Deny by exact label matching.
 - Limits behavior to ChatGPT pages.
-- Includes a popup to toggle auto-approval and stall refresh.
+- Includes a popup to toggle auto-approval and stall/error refresh.
 - Does not collect, store, sell, or transmit user data.
 
 Use this extension only with tools and connectors you trust.
@@ -38,7 +38,7 @@ English
 
 ### storage
 
-Stores the user's extension settings, including whether auto-approval and stall refresh are enabled.
+Stores the user's extension settings, including whether auto-approval and stall/error refresh are enabled.
 
 ### activeTab
 
@@ -54,4 +54,4 @@ The extension does not collect user data. It reads visible DOM text on ChatGPT p
 
 ## Single Purpose
 
-Automatically approve trusted ChatGPT tool confirmation prompts and recover stalled confirmation views.
+Automatically approve trusted ChatGPT tool confirmation prompts and recover stalled or errored ChatGPT views.

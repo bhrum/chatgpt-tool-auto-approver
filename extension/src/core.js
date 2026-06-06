@@ -60,6 +60,14 @@
     "retry"
   ];
 
+  const CHAT_ERROR_TERMS = [
+    "出错了，无法显示此消息",
+    "无法显示此消息",
+    "there was an error displaying this message",
+    "unable to display this message",
+    "something went wrong"
+  ];
+
   const DEFAULT_SETTINGS = Object.freeze({
     enabled: true,
     autoRefresh: true,
@@ -67,6 +75,7 @@
     clickCooldownMs: 2500,
     refreshDelayMs: 12000,
     retryRefreshDelayMs: 20000,
+    errorRefreshDelayMs: 8000,
     minRefreshGapMs: 60000,
     debug: false
   });
@@ -258,6 +267,14 @@
     });
   }
 
+  function hasChatGPTDisplayError(doc) {
+    const root = doc && (doc.body || doc);
+    if (!root) return false;
+
+    const bodyText = lowerText(textOf(root));
+    return CHAT_ERROR_TERMS.some((term) => bodyText.includes(term));
+  }
+
   function composerHasUserText(doc) {
     const root = doc && (doc.body || doc);
     if (!root || typeof root.querySelectorAll !== "function") return false;
@@ -274,21 +291,36 @@
     const merged = Object.assign({}, DEFAULT_SETTINGS, settings || {});
     state.promptMissingButtonSince = state.promptMissingButtonSince || 0;
     state.retrySince = state.retrySince || 0;
+    state.chatErrorSince = state.chatErrorSince || 0;
     state.lastRefreshAt = state.lastRefreshAt || 0;
 
     if (!merged.autoRefresh || composerHasUserText(doc)) {
       state.promptMissingButtonSince = 0;
       state.retrySince = 0;
+      state.chatErrorSince = 0;
       return null;
     }
 
     if (findApprovalButton(doc)) {
       state.promptMissingButtonSince = 0;
       state.retrySince = 0;
+      state.chatErrorSince = 0;
       return null;
     }
 
     const refreshGapOk = now - state.lastRefreshAt >= merged.minRefreshGapMs;
+    const chatErrorVisible = hasChatGPTDisplayError(doc);
+    if (chatErrorVisible) {
+      if (!state.chatErrorSince) state.chatErrorSince = now;
+      if (refreshGapOk && now - state.chatErrorSince >= merged.errorRefreshDelayMs) {
+        state.lastRefreshAt = now;
+        state.chatErrorSince = 0;
+        return "ChatGPT display error stayed visible";
+      }
+    } else {
+      state.chatErrorSince = 0;
+    }
+
     const promptMissingButton = hasPotentialApprovalPromptWithoutButton(doc);
     if (promptMissingButton) {
       if (!state.promptMissingButtonSince) state.promptMissingButtonSince = now;
@@ -332,6 +364,7 @@
     findApprovalButton,
     hasPotentialApprovalPromptWithoutButton,
     hasRetryButton,
+    hasChatGPTDisplayError,
     composerHasUserText,
     updateRefreshState
   };

@@ -8,6 +8,7 @@
     lastClickedText: "",
     promptMissingButtonSince: 0,
     retrySince: 0,
+    chatErrorSince: 0,
     lastRefreshAt: 0
   };
 
@@ -110,6 +111,7 @@
           settings,
           hasApprovalButton: Boolean(approvalButton),
           hasRetryButton: core.hasRetryButton(document),
+          hasChatError: core.hasChatGPTDisplayError(document),
           url: window.location.href
         });
         return true;

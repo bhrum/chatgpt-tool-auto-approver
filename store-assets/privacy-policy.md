@@ -10,11 +10,11 @@ This extension does not collect, transmit, sell, share, or store user data outsi
 
 ## Local Page Access
 
-The extension runs only on `chatgpt.com` and `chat.openai.com`. It reads visible page text and button labels locally to detect ChatGPT tool confirmation cards. This local inspection is used only to identify an Allow/Approve button inside a guarded confirmation prompt.
+The extension runs only on `chatgpt.com` and `chat.openai.com`. It reads visible page text and button labels locally to detect ChatGPT tool confirmation cards and ChatGPT display-error messages. This local inspection is used only to identify an Allow/Approve button inside a guarded confirmation prompt or decide whether local page refresh recovery should run.
 
 ## Settings
 
-The extension stores user preferences in Chrome extension storage, such as whether auto-approval and stall refresh are enabled. These settings remain local to the browser profile unless Chrome sync is enabled by the user.
+The extension stores user preferences in Chrome extension storage, such as whether auto-approval and stall/error refresh are enabled. These settings remain local to the browser profile unless Chrome sync is enabled by the user.
 
 ## Third Parties
 

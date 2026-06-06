@@ -8,7 +8,7 @@ The content script is limited to `chatgpt.com` and `chat.openai.com`. It does no
 - an exact Reject/Deny label,
 - nearby tool-risk or tool-call context.
 
-The extension intentionally avoids broad text matching for denial labels and never clicks Reject/Deny.
+The extension intentionally avoids broad text matching for denial labels and never clicks Reject/Deny. Its optional refresh recovery also detects ChatGPT display-error messages such as "Unable to display this message" / "出错了，无法显示此消息" and reloads only when refresh recovery is enabled and the composer is empty.
 
 Manual test performed:
 

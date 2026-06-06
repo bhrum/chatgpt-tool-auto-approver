@@ -4,7 +4,7 @@ A small Manifest V3 Chrome extension for users who repeatedly run trusted tools 
 
 The extension only runs on `chatgpt.com` and `chat.openai.com`. It looks for a guarded ChatGPT tool confirmation card that contains an explicit Allow/Approve button, a Reject/Deny button, and nearby tool-risk context. When that pattern is present, it clicks Allow automatically.
 
-It never targets Reject/Deny buttons and does not collect, store, sell, or transmit user data. Optional stall recovery can refresh a ChatGPT page when a confirmation card appears stuck, while skipping refresh if the composer contains user-entered text.
+It never targets Reject/Deny buttons and does not collect, store, sell, or transmit user data. Optional stall recovery can refresh a ChatGPT page when a confirmation card appears stuck or ChatGPT shows a display error, while skipping refresh if the composer contains user-entered text.
 
 ## Install Locally
 

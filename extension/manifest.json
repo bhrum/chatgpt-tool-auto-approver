@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "ChatGPT Tool Auto Approver",
-  "version": "0.1.0",
-  "description": "Automatically clicks Allow on ChatGPT tool confirmation cards and can refresh stalled confirmation views.",
+  "version": "0.1.1",
+  "description": "Automatically clicks Allow on ChatGPT tool confirmation cards and can refresh stalled views or display errors.",
   "permissions": ["storage", "activeTab"],
   "host_permissions": [
     "https://chatgpt.com/*",
