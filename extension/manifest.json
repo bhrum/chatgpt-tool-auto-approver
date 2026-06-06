@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "ChatGPT Tool Auto Approver",
+  "version": "0.1.0",
+  "description": "Automatically clicks Allow on ChatGPT tool confirmation cards and can refresh stalled confirmation views.",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": [
+    "https://chatgpt.com/*",
+    "https://chat.openai.com/*"
+  ],
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*"
+      ],
+      "js": ["src/core.js", "src/content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "ChatGPT Tool Auto Approver",
+    "default_icon": {
+      "16": "assets/icon16.png",
+      "48": "assets/icon48.png",
+      "128": "assets/icon128.png"
+    },
+    "default_popup": "popup.html"
+  }
+}
